@@ -1,0 +1,37 @@
+<script type = "text/javascript">  
+    // window.onload = function () {  
+        // document.onkeydown = function (e , p) {  
+            // return (e.which || e.keyCode) != 116;  
+            // return (p.which || p.keyCode) != 82;  
+
+        // };  
+    // }  
+// Disable key press
+function disableKeyPressing(e) {
+
+    var conditions = [
+        // Diable F5
+        (e.which || e.keyCode) == 116,
+        // Diable Ctrl+R
+        e.ctrlKey && (e.which === 82)
+    ]
+
+    if ( $.each(conditions, function(key, val) { val + ' || ' }) ) {
+        e.preventDefault();
+    }
+}
+
+// F5 is pressed
+$(document).on('keydown', function(e) {
+    // F5 is pressed
+    if((e.which || e.keyCode) == 116) {
+        disableKeyPressing(e);
+        console.log('F5 is diabled now');
+    }
+
+    // Ctrl+R
+    if (e.ctrlKey && (e.which === 82) ) {
+        disableKeyPressing(e);
+        
+    }
+});

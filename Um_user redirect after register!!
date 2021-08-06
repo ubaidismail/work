@@ -1,0 +1,9 @@
+Um_user redirect after register!!
+
+add_action( 'um_after_save_registration_details', 'my_after_save_registration_details', 1, 2 );
+function my_after_save_registration_details() {
+      $custom_page_url = 'http://baby.testserver.developerventure.com/login/';
+    wp_redirect( $custom_page_url );
+// 	header('Location:http://baby.testserver.developerventure.com/login/');
+	exit();
+}

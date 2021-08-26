@@ -1,0 +1,135 @@
+-------------------Search code-----------------------
+<?php
+function html5_search_form( ) { 
+?>
+  <section class="search customize-search">
+      <div class="filter-main">
+         <div class="filter-1">
+            <span class="s-location">Location</span>
+            <select class="location-search">
+               <option value="0" data-termid="0">All Locations</option>
+              <?php
+                  $categories=get_categories(
+                   array( 'parent' => 24 )
+                 );
+                  $selected = '';
+                  foreach ($categories as $c) {
+                      $term_id = $c->term_id;
+                      $slug = $c->slug;
+                      $name = $c->cat_name;
+                      if(isset($_GET['loc'])){
+                        if($_GET['loc'] == $slug) {
+                          $selected = 'selected';
+                        } else {
+                          $selected = '';
+                        }
+                      }
+                      ?>
+                        <option value="<?php echo $slug ?>" <?php echo $selected; ?> data-termid="<?php echo $term_id ?>"><?php echo $name ?></option>
+                      <?php
+                  }
+               ?>
+
+            </select>
+         </div>
+         <div class="filter-1">
+            <span class="s-location">Breed</span>
+            <select class="breed-search">
+               <option value="0" data-termid="0">All Breed</option>
+               <?php
+                  $categories=get_categories(
+                   array( 'parent' => 23 )
+                 );
+                  $selected = '';
+                  foreach ($categories as $c) {
+                      $term_id = $c->term_id;
+                      $slug = $c->slug;
+                      $name = $c->cat_name;
+                      if(isset($_GET['breed'])){
+                        if($_GET['breed'] == $slug) {
+                          $selected = 'selected';
+                        } else {
+                          $selected = '';
+                        }
+                      }
+                      ?>
+                        <option value="<?php echo $slug ?>" <?php echo $selected; ?>  data-termid="<?php echo $term_id ?>"><?php echo $name ?></option>
+                      <?php
+                  }
+               ?>
+            </select>
+         </div>
+         <div class="filter-1">
+            <span class="s-location">Gender</span>
+            <select class="gender-search">
+               <option value="0" data-termid="0">All Genders</option>
+               <?php
+                  $categories=get_categories(
+                   array( 'parent' => 25 )
+                 );
+                  $selected = '';
+                  foreach ($categories as $c) {
+                      $term_id = $c->term_id;
+                      $slug = $c->slug;
+                      $name = $c->cat_name;
+                      if(isset($_GET['gender'])){
+                        if($_GET['gender'] == $slug) {
+                          $selected = 'selected';
+                        } else {
+                          $selected = '';
+                        }
+                      }
+                      ?>
+                        <option value="<?php echo $slug ?>" <?php echo $selected; ?>  data-termid="<?php echo $term_id ?>"><?php echo $name ?></option>
+                      <?php
+                  }
+               ?>
+            </select>
+         </div>
+      </div>
+</section>
+<?php
+// function custom_search_area() {
+//  $categories=get_categories(
+//    array( 'parent' => $cat->cat_ID )
+//  );
+// }
+}
+
+add_shortcode('search-box' , 'html5_search_form');
+//  add_filter( 'get_search_form', 'html5_search_form' );
+?>
+---------------   
+    $breed = '';
+    $breedId = '';
+----------------
+  if(isset($_GET['breed'])){
+      $breed = $_GET['breed'];
+      $breedId = $_GET['breedId']; 
+}
+----------
+ if($_GET['breed'] != '' && $_GET['breed'] != "0") {
+        $breedarr = array(
+            'taxonomy'  => 'category',
+            'field'  => $breed,
+            'terms'  => array($breedId)
+          );
+      } else {
+        $breedarr = '';
+      }
+-------------
+
+  $category_detail=get_the_category(get_the_ID());//$post->ID
+  foreach($category_detail as $cd){
+    
+    if($cd->category_parent == 23){
+      $breed = $cd->name; 
+    }
+    if($cd->category_parent == 24){
+      $location = $cd->name;  
+    }
+    if($cd->category_parent == 25){
+      $gender = $cd->name;  
+    }
+    
+  }
